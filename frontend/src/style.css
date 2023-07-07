@@ -1,0 +1,113 @@
+
+
+.text-field {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  padding: 1rem 2rem;
+  width: 70vw;
+  border-radius: 1rem;
+  box-shadow: 0 0 5px gray;
+  margin: 1rem auto;
+}
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 0 5px gray;
+  width: fit-content;
+  margin: 30vh auto;
+  padding: 3rem 8rem;
+  border-radius: 16px;
+}
+.body header {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.body div {
+  margin-bottom: 1rem;
+}
+.body div input {
+  padding: 5px 10px;
+  font-size: 1rem;
+}
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 7px;
+  text-decoration: none;
+
+  font-weight: bold;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.btn-login {
+  background-color: lightskyblue;
+
+  color: black;
+  transition: all 0.3s;
+}
+.btn-login:hover {
+  background-color: rgb(73, 180, 247);
+}
+.chating {
+  padding: 1rem;
+  max-width: fit-content;
+  margin: auto;
+}
+.chating form {
+  /* background-color: rgb(255, 255, 112); */
+  padding: 1rem;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+}
+.chating form input,
+.chating form button {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+}
+.chating form button {
+  margin-left: 1rem;
+}
+.chating header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+
+.chat-component p{
+  max-width: fit-content;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 7px;
+  margin: 1px;
+}
+
+.my-text p{
+  background-color: lightblue;
+}
+.other-text p{
+  background-color: lightgray;
+}
+.chat-component .user-img{
+  background-color:red;
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.chat-component{
+  display: flex;
+  gap: 10px;
+}
+.chat-component.my-text{
+  flex-direction: row-reverse;
+  margin-top: 2px;
+}
+

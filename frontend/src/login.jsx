@@ -8,6 +8,7 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setcPassword] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
   const handleLogin = () => {
     if (
       password === cpassword &&
@@ -22,7 +23,10 @@ const Login = (props) => {
         .then((res) => console.log("data added to the database!"))
         .catch((err) => console.log(err));
       var someDate = new Date();
-      var numberOfDaysToAdd = 1;
+      var numberOfDaysToAdd = 0;
+      if (checkbox) {
+        numberOfDaysToAdd = 30;
+      }
       var result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
 
       let temp = new Date(result).toUTCString();
@@ -68,6 +72,18 @@ const Login = (props) => {
             />
           </div>
         </main>
+        <div className="checkbox">
+          <input
+            type="checkbox"
+            name=""
+            id="checkbox"
+            checked={checkbox}
+            onClick={() => {
+              setCheckbox(!checkbox);
+            }}
+          />
+          <label htmlFor="checkbox"> Remeber me for a month.</label>
+        </div>
         <button className="btn btn-login" onClick={handleLogin}>
           Login
         </button>

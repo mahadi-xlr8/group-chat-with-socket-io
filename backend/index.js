@@ -1,7 +1,7 @@
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const back = require("./server/db");
+const {chats} = require("./server/db");
 const app = express();
 const route = require("./routes");
 const config = require("config");
@@ -30,8 +30,10 @@ io.on("connection", (socket) => {
       username: data.username,
       time: data.time,
     };
+    // TODO:
     async function temp() {
-      await back.addText(obj.username, obj.text, obj.time);
+      const chat=new chats(obj)
+      await chat.save()
     }
     temp();
     io.emit("chat", obj);
@@ -40,7 +42,7 @@ io.on("connection", (socket) => {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log("listening on port 5000..."));
+app.listen(port, () => console.log(`listening on port ${port}...`));
 
 httpServer.listen(8080, () => console.log("listing on port 8080..."));
 

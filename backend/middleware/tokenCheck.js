@@ -3,7 +3,7 @@ const config = require("config");
 const joi=require('joi')
 
 const validateToken = function (req, res, next) {
-  const token = req.header("x-access-token");
+  const token = req.body.token;
   if (!token) res.status(401).send("no token provided!");
 
   try {

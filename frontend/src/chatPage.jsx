@@ -12,7 +12,9 @@ class Chat extends React.Component {
   constructor() {
     axios
       .get("/chat/all")
-      .then((res) => (this.state.chat = res.data))
+      .then((res) => {
+        this.setState({ chat: res.data });
+      })
       .catch((err) => console.log(err));
     super();
   }

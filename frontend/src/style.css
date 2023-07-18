@@ -111,3 +111,22 @@
   margin-top: 2px;
 }
 
+
+.body .login-header{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 0;
+}
+.body .login-header div{
+  padding: .5rem 3rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.body .login-header .selected{
+background-color: lightgray;
+}
+.body{
+  padding-top: 0px;
+}
+

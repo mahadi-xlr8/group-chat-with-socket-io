@@ -9,34 +9,21 @@ class App extends React.Component {
   };
   constructor() {
     super();
-  }
-  validateUserLogin = () => {
-    let cookie = document.cookie.split(",");
-    const data = {};
-    cookie.map((e, index) => {
-      let temp = e.split("=");
-      let name = "username";
-      if (index === 1) {
-        name = "password";
-      }
-      data[name] = temp[1];
-    });
+    let cookie = document.cookie.split("=");
+    const token = cookie[1];
     axios
-      .post("/login/validate", data)
+      .post("/login/auto", { token })
       .then((res) => {
-        if (res.data === true) {
-          this.setState({ login: true, username: data.username });
-        }
+        this.setState({ username: res.data.username, login: true });
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.error(err.message));
+  }
 
   handleLogin = (username) => {
     this.setState({ login: true, username: username });
   };
 
   render() {
-    this.validateUserLogin()
     return this.state.login ? (
       <Chat username={this.state.username} />
     ) : (

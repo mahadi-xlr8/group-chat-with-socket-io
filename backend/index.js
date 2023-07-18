@@ -9,6 +9,10 @@ if (!config.get("jwtKey")) {
   console.error("jwt key is not set!");
   process.exit(1);
 }
+if (!config.get("dbPassword")) {
+  console.error("database Password is not set!");
+  process.exit(1);
+}
 const httpServer = createServer(app);
 
 app.use(express.json());

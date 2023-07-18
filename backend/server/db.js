@@ -1,8 +1,9 @@
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const dbUrl =
-  "mongodb+srv://mahadi:ird7uiHzKgKrLVgK@cluster-0.zwggrxs.mongodb.net/groupChat?retryWrites=true&w=majority";
+
+const password = config.get("dbPassword");
+const dbUrl = `mongodb+srv://mahadi:${password}@cluster0.dhjpz4e.mongodb.net/groupChat?retryWrites=true&w=majority`;
 const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -43,10 +44,10 @@ userSchema.methods.genToken = function () {
 
 const Users = Mongoose.model("credentials", userSchema);
 
-async function getUser(){
-  return await Users.find()
+async function getUser() {
+  return await Users.find();
 }
 
-module.exports.getUser=getUser
+module.exports.getUser = getUser;
 module.exports.chats = Chats;
 module.exports.users = Users;

@@ -1,3 +1,4 @@
 {
-  "jwtKey": "groupChat_jwtKey"
+  "jwtKey": "groupChat_jwtKey",
+  "dbPassword": "groupChat_dbPassword"
 }

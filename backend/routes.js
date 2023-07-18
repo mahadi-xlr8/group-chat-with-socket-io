@@ -1,35 +1,70 @@
-require("dotenv").config();
 const express = require("express");
-const app = express();
-const back = require("./server");
+const app = express.Router();
+const { chats, users } = require("./server/db");
+const validateUser = require("./validation/validate");
+const bcrypt = require("bcrypt");
+const { validateToken } = require("./middleware/tokenCheck");
+app.post("/signup", async (req, res) => {
+  const validation = validateUser({
+    username: req.body.username,
+    password: req.body.password,
+  });
+  if (validation.error)
+    return res.status(400).send(validation.error.details[0].message);
 
-app.use(express.json());
-
-app.post("/login", (req, res) => {
-  async function temp() {
-    await back.addUser(req.body.username, req.body.password);
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.body.password, salt);
+  try {
+    const user = new users({
+      username: req.body.username,
+      password: hash,
+    });
+    await user.save();
+    res
+      .header("x-access-token", user.genToken())
+      .status(200)
+      .send("new user added!");
+  } catch (err) {
+    res.status(400).send("username already exist!");
   }
-  temp();
-  res.status(200).send("new user added!");
 });
 
-// TODO: finish this part
-app.post("/login/validate", (req, res) => {
-  async function temp() {
-    const lol = await back.validateUser(req.body.username, req.body.password);
-    res.send(lol);
+app.post("/login", async (req, res) => {
+  const validation = validateUser({
+    username: req.body.username,
+    password: req.body.password,
+  });
+  if (validation.error) {
+    return res.status(400).send(validation.error.details[0].message);
   }
-  temp();
+  const user = await users.findOne({ username: req.body.username });
+  if (!user) {
+    return res.status(401).send("Invalid User!");
+  }
+  const decodedPassword = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+  if (decodedPassword) {
+    res
+      .header("x-access-token", user.genToken())
+      .status(200)
+      .send({ username: user.username });
+  } else res.status(400).send("Invalid Username or Password!");
 });
-app.get("/chat/all",(req,res)=>{
-  async function temp(){
-    const chats=await back.getText()
-    res.json(chats)
+
+app.post("/login/auto", validateToken, async (req, res) => {
+  const id = req.user.id;
+  const user = await users.findById(id);
+  if (!user) {
+    return res.status(400).send("Invalid access token!");
   }
-  temp()
-})
+  res.status(200).send({ username: user.username });
+});
 
+app.get("/chat/all", async (req, res) => {
+  const chatList = await chats.find();
+  res.status(200).json(chatList);
+});
 
-const port = process.env.PORT || 4000;
-
-app.listen(port, () => console.log(`listening on port ${port}...`));
+module.exports = app;

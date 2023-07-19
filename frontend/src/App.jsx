@@ -6,6 +6,7 @@ class App extends React.Component {
   state = {
     login: false,
     username: "",
+    color: "",
   };
   constructor() {
     super();
@@ -14,18 +15,23 @@ class App extends React.Component {
     axios
       .post("/login/auto", { token })
       .then((res) => {
-        this.setState({ username: res.data.username, login: true });
+        console.log(res.data)
+        this.setState({
+          username: res.data.username,
+          login: true,
+          color: res.data.color,
+        });
       })
       .catch((err) => console.error(err.message));
   }
 
-  handleLogin = (username) => {
-    this.setState({ login: true, username: username });
+  handleLogin = (username, color) => {
+    this.setState({ login: true, username: username, color: color });
   };
 
   render() {
     return this.state.login ? (
-      <Chat username={this.state.username} />
+      <Chat username={this.state.username} color={this.state.color}/>
     ) : (
       <Login changeLogin={this.handleLogin} />
     );

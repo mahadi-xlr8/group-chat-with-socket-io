@@ -7,7 +7,7 @@ const dbUrl = `mongodb+srv://mahadi:${password}@cluster0.dhjpz4e.mongodb.net/gro
 const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  autoIndex: true, //make this also true
+  autoIndex: true,
 };
 Mongoose.connect(dbUrl, connectionParams)
   .then(() => console.log("connected to the database"))
@@ -19,6 +19,7 @@ const Chats = Mongoose.model(
     text: String,
     time: String,
     username: String,
+    color: String,
   })
 );
 
@@ -36,6 +37,12 @@ const userSchema = new Mongoose.Schema({
     maxlength: 1024,
     required: true,
   },
+  color: {
+    type: String,
+    minlength: 6,
+    maxlength: 255,
+    required: true,
+  },
 });
 
 userSchema.methods.genToken = function () {
@@ -44,10 +51,5 @@ userSchema.methods.genToken = function () {
 
 const Users = Mongoose.model("credentials", userSchema);
 
-async function getUser() {
-  return await Users.find();
-}
-
-module.exports.getUser = getUser;
 module.exports.chats = Chats;
 module.exports.users = Users;

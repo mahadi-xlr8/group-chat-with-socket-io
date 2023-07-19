@@ -1,7 +1,7 @@
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const {chats} = require("./server/db");
+const { chats } = require("./server/db");
 const app = express();
 const route = require("./routes");
 const config = require("config");
@@ -29,11 +29,13 @@ io.on("connection", (socket) => {
       text: data.message,
       username: data.username,
       time: data.time,
+      color: data.color,
     };
+    
     // TODO:
     async function temp() {
-      const chat=new chats(obj)
-      await chat.save()
+      const chat = new chats(obj);
+      await chat.save();
     }
     temp();
     io.emit("chat", obj);

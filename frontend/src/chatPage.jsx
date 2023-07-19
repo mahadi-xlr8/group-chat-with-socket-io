@@ -21,15 +21,17 @@ class Chat extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(this.props.color)
     socket.emit("chat", {
       message: this.state.message,
       username: this.props.username,
       time: new Date().toLocaleString("en-US"),
+      color: this.props.color,
     });
     this.setState({ message: "" });
   };
   render() {
-    const username = this.props.username;
+    // const username = this.props.username;
 
     socket.on("chat", (data) => {
       const x = data;
@@ -47,6 +49,7 @@ class Chat extends React.Component {
                 text={value.text}
                 username={value.username}
                 time={value.time}
+                color={value.color}
               />
             );
           })}

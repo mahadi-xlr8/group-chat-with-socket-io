@@ -27,7 +27,7 @@ const Login = (props) => {
       username.length <= 255 &&
       password.length >= 1
     ) {
-      console.log("inside the button!");
+      
       axios
         .post("/signup", {
           username,
@@ -35,11 +35,12 @@ const Login = (props) => {
         })
         .then((res) => {
           const token = res.headers["x-access-token"];
-          console.log("access token: ",token)
+          const color = res.data.color;
+
           if (checkbox) {
             setCockie(30, token);
           }
-          props.changeLogin(username);
+          props.changeLogin(username, color);
           setUsername("");
           setPassword("");
           setcPassword("");
@@ -61,11 +62,11 @@ const Login = (props) => {
         .post("/login", { username, password })
         .then((res) => {
           const token = res.headers["x-access-token"];
-          console.log("access token: ",token)
           if (checkbox) {
             setCockie(30, token);
           }
-          props.changeLogin(username);
+          const color = res.data.color;
+          props.changeLogin(username, color);
           setUsername("");
           setPassword("");
           setcPassword("");

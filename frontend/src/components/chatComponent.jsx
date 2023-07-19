@@ -6,7 +6,7 @@ const ChatComponent = (props) => {
         props.me ? "chat-component my-text" : "other-text chat-component"
       }
     >
-      <span className="user-img" title={props.username}>
+      <span className="user-img" title={props.username} style={{backgroundColor:props.color}}>
         {letter}
       </span>
       <p title={props.time}>{props.text}</p>

@@ -130,3 +130,17 @@ background-color: lightgray;
   padding-top: 0px;
 }
 
+.signup-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.signup-main .error-message{
+  margin: 7px auto;
+  color: red;
+
+}
+#confirm-password{
+  margin-bottom: 0;
+}
+

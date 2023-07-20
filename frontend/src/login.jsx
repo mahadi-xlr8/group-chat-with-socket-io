@@ -11,6 +11,7 @@ const Login = (props) => {
   const [cpassword, setcPassword] = useState("");
   const [signup, setSignup] = useState(true);
   const [checkbox, setCheckbox] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const setCockie = function (numberOfDaysToAdd = 0, accessToken) {
     var someDate = new Date();
@@ -21,58 +22,57 @@ const Login = (props) => {
   };
 
   const handleSignup = () => {
-    if (
-      password === cpassword &&
-      username.length >= 3 &&
-      username.length <= 255 &&
-      password.length >= 1
-    ) {
-      
-      axios
-        .post("/signup", {
-          username,
-          password,
-        })
-        .then((res) => {
-          const token = res.headers["x-access-token"];
-          const color = res.data.color;
-
-          if (checkbox) {
-            setCockie(30, token);
-          }
-          props.changeLogin(username, color);
-          setUsername("");
-          setPassword("");
-          setcPassword("");
-        })
-        .catch((err) => console.log(err));
+    if (password != cpassword) {
+      return setErrorMessage("'Password' & 'Confirm Password' are not same!");
     }
+    if (!username) {
+      return setErrorMessage("'Username' is required!");
+    }
+    if (!password) return setErrorMessage("'Password' is required!");
+
+    axios
+      .post("/signup", {
+        username,
+        password,
+      })
+      .then((res) => {
+        const token = res.headers["x-access-token"];
+        const color = res.data.color;
+
+        if (checkbox) {
+          setCockie(30, token);
+        }
+        props.changeLogin(username, color);
+        setUsername("");
+        setPassword("");
+        setcPassword("");
+      })
+      .catch((err) => {
+        return setErrorMessage(err.response.data);
+      });
 
     //let x = decodeURIComponent(document.cookie);
   };
 
   const handleLogin = () => {
-    if (
-      username.length >= 3 &&
-      username.length <= 255 &&
-      password.length >= 5 &&
-      password.length <= 225
-    ) {
-      axios
-        .post("/login", { username, password })
-        .then((res) => {
-          const token = res.headers["x-access-token"];
-          if (checkbox) {
-            setCockie(30, token);
-          }
-          const color = res.data.color;
-          props.changeLogin(username, color);
-          setUsername("");
-          setPassword("");
-          setcPassword("");
-        })
-        .catch((err) => console.error(err.message));
-    }
+    if (!password) return setErrorMessage("'Password' is required!");
+    if (!username) return setErrorMessage("'Username' is required!");
+    axios
+      .post("/login", { username, password })
+      .then((res) => {
+        const token = res.headers["x-access-token"];
+        if (checkbox) {
+          setCockie(30, token);
+        }
+        const color = res.data.color;
+        props.changeLogin(username, color);
+        setUsername("");
+        setPassword("");
+        setcPassword("");
+      })
+      .catch((err) => {
+        return setErrorMessage(err.response.data);
+      });
   };
 
   return (
@@ -81,13 +81,19 @@ const Login = (props) => {
         <header className="login-header">
           <div
             className={signup ? "selected" : ""}
-            onClick={() => setSignup(true)}
+            onClick={() => {
+              setSignup(true);
+              setErrorMessage("");
+            }}
           >
             Signup
           </div>
           <div
             className={!signup ? "selected" : ""}
-            onClick={() => setSignup(false)}
+            onClick={() => {
+              setSignup(false);
+              setErrorMessage("")
+            }}
           >
             Login
           </div>
@@ -103,6 +109,7 @@ const Login = (props) => {
             checkbox={checkbox}
             setCheckbox={setCheckbox}
             handleLogin={handleSignup}
+            errorMessage={errorMessage}
           />
         ) : (
           <LoginComponent
@@ -113,6 +120,7 @@ const Login = (props) => {
             checkbox={checkbox}
             setCheckbox={setCheckbox}
             onClick={handleLogin}
+            errorMessage={errorMessage}
           />
         )}
       </div>

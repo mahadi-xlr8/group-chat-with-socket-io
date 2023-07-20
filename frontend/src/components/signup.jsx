@@ -1,7 +1,7 @@
 const Signup = (props) => {
   return (
     <>
-      <main>
+      <main className="signup-main">
         <div className="username">
           <input
             type="text"
@@ -22,7 +22,7 @@ const Signup = (props) => {
             onChange={(e) => props.setPassword(e.target.value)}
           />
         </div>
-        <div className="password">
+        <div className="password" id="confirm-password">
           <input
             type="password"
             name=""
@@ -32,6 +32,7 @@ const Signup = (props) => {
             onChange={(e) => props.setcPassword(e.target.value)}
           />
         </div>
+        <p className="error-message">{props.errorMessage}</p>
       </main>
       <div className="checkbox">
         <input

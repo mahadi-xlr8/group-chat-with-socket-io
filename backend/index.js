@@ -5,6 +5,8 @@ const { chats } = require("./server/db");
 const app = express();
 const route = require("./routes");
 const config = require("config");
+const helmet = require("helmet");
+const compression = require("compression");
 if (!config.get("jwtKey")) {
   console.error("jwt key is not set!");
   process.exit(1);
@@ -14,6 +16,9 @@ if (!config.get("dbPassword")) {
   process.exit(1);
 }
 const httpServer = createServer(app);
+
+app.use(helmet());
+app.use(compression());
 
 app.use(express.json());
 app.use("/", route);
@@ -31,7 +36,7 @@ io.on("connection", (socket) => {
       time: data.time,
       color: data.color,
     };
-    
+
     // TODO:
     async function temp() {
       const chat = new chats(obj);

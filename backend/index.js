@@ -1,3 +1,4 @@
+require("express-async-errors");
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -7,6 +8,7 @@ const route = require("./routes");
 const config = require("config");
 const helmet = require("helmet");
 const compression = require("compression");
+const error = require("./middleware/error");
 if (!config.get("jwtKey")) {
   console.error("jwt key is not set!");
   process.exit(1);
@@ -22,6 +24,7 @@ app.use(compression());
 
 app.use(express.json());
 app.use("/", route);
+app.use(error);
 
 const io = new Server(httpServer, {
   cors: {

@@ -20,11 +20,11 @@ process.on("unhandledRejection", (err) => {
 
 require("./middleware/cors")(app);
 
-if (!config.get("jwtKey")) {
+if (!process.env.groupChat_jwtKey) {
   logger.info("jwt key is not set!");
   process.exit(1);
 }
-if (!config.get("dbPassword")) {
+if (!process.env.groupChat_dbPassword) {
   logger.info("database Password is not set!");
   process.exit(1);
 }

@@ -7,7 +7,7 @@ const validateToken = function (req, res, next) {
   if (!token) res.status(401).send("no token provided!");
 
   try {
-    const validation = jwt.verify(token, config.get("jwtKey"));
+    const validation = jwt.verify(token, process.env.groupChat_jwtKey);
     req.user = validation;
     next();
   } catch (err) {

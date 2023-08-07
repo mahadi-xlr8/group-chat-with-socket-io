@@ -1,8 +1,9 @@
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const logger=require("../log/logger")
-const password = config.get("dbPassword");
+const logger = require("../log/logger");
+
+const password = process.env.groupChat_dbPassword;
 const dbUrl = `mongodb+srv://mahadi:${password}@cluster0.dhjpz4e.mongodb.net/groupChat?retryWrites=true&w=majority`;
 const connectionParams = {
   useNewUrlParser: true,
@@ -46,7 +47,7 @@ const userSchema = new Mongoose.Schema({
 });
 
 userSchema.methods.genToken = function () {
-  return jwt.sign({ id: this._id }, config.get("jwtKey"));
+  return jwt.sign({ id: this._id }, process.env.groupChat_jwtKey);
 };
 
 const Users = Mongoose.model("credentials", userSchema);

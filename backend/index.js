@@ -2,13 +2,14 @@ require("express-async-errors");
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const helmet = require("helmet");
+const config = require("config");
 const { chats } = require("./server/db");
 const app = express();
 const route = require("./routes");
-const config = require("config");
-const helmet = require("helmet");
 const compression = require("compression");
 const error = require("./middleware/error");
+
 if (!config.get("jwtKey")) {
   console.error("jwt key is not set!");
   process.exit(1);
@@ -55,5 +56,6 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`listening on port ${port}...`));
 
 httpServer.listen(8080, () => console.log("listing on port 8080..."));
+
 
 // backend api

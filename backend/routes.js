@@ -78,6 +78,7 @@ app.post("/login/auto", validateToken, async (req, res) => {
 });
 
 app.get("/chat/all", async (req, res) => {
+  throw new Error("mara kha")
   const chatList = await chats.find();
   res.status(200).json(chatList);
 });

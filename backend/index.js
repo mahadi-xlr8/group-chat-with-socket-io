@@ -18,6 +18,8 @@ process.on("unhandledRejection", (err) => {
   logger.error(err.message, err);
 });
 
+require("./middleware/cors")(app);
+
 if (!config.get("jwtKey")) {
   logger.info("jwt key is not set!");
   process.exit(1);

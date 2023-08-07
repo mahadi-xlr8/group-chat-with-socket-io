@@ -18,9 +18,8 @@ process.on("unhandledRejection", (err) => {
   logger.error(err.message, err);
 });
 
-
 if (!config.get("jwtKey")) {
-  logger.info("jwt key is not set!")
+  logger.info("jwt key is not set!");
   process.exit(1);
 }
 if (!config.get("dbPassword")) {
@@ -29,12 +28,10 @@ if (!config.get("dbPassword")) {
 }
 const httpServer = createServer(app);
 
-app.use(helmet());
-app.use(compression());
-
 app.use(express.json());
 app.use("/", route);
 app.use(error);
+require("./middleware/prodSecurity")(app);
 
 const io = new Server(httpServer, {
   cors: {

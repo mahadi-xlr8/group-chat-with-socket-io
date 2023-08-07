@@ -1,7 +1,7 @@
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
+const logger=require("../log/logger")
 const password = config.get("dbPassword");
 const dbUrl = `mongodb+srv://mahadi:${password}@cluster0.dhjpz4e.mongodb.net/groupChat?retryWrites=true&w=majority`;
 const connectionParams = {
@@ -10,7 +10,7 @@ const connectionParams = {
   autoIndex: true,
 };
 Mongoose.connect(dbUrl, connectionParams)
-  .then(() => console.log("connected to the database"))
+  .then(() => logger.info("connected to the database"))
   .catch((err) => console.error(err));
 
 const Chats = Mongoose.model(

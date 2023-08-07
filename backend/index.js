@@ -9,13 +9,22 @@ const app = express();
 const route = require("./routes");
 const compression = require("compression");
 const error = require("./middleware/error");
+const logger = require("./log/logger");
+
+process.on("uncaughtException", (err) => {
+  logger.error(err.message, err);
+});
+process.on("unhandledRejection", (err) => {
+  logger.error(err.message, err);
+});
+
 
 if (!config.get("jwtKey")) {
-  console.error("jwt key is not set!");
+  logger.info("jwt key is not set!")
   process.exit(1);
 }
 if (!config.get("dbPassword")) {
-  console.error("database Password is not set!");
+  logger.info("database Password is not set!");
   process.exit(1);
 }
 const httpServer = createServer(app);
@@ -53,9 +62,8 @@ io.on("connection", (socket) => {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`listening on port ${port}...`));
+app.listen(port, () => logger.info(`listening on port ${port}...`));
 
-httpServer.listen(8080, () => console.log("listing on port 8080..."));
-
+httpServer.listen(8080, () => logger.info("listing on port 8080..."));
 
 // backend api

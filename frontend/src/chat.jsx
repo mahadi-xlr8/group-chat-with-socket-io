@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "./style.css";
 
 
-const socket = io("http://localhost:5000");
+const socket = io("https://group-chat-with-socket-134as6lzs-mahadi-xlr8.vercel.app:8080");
 
 
 function Chat() {

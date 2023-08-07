@@ -10,6 +10,7 @@ class App extends React.Component {
   };
   constructor() {
     super();
+    axios.defaults.withCredentials=true;
     let cookie = document.cookie.split("=");
     const token = cookie[1];
     axios

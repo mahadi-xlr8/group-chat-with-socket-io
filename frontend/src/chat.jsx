@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "./style.css";
 
 
-const socket = io("https://group-chat-with-socket-134as6lzs-mahadi-xlr8.vercel.app:8080");
+const socket = io("https://group-chat-with-socket-io.vercel.app:8080/");
 
 
 function Chat() {
@@ -12,6 +12,7 @@ function Chat() {
   const [id, setId] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(message)
     socket.emit("chat", { message });
     setMessage("");
   };

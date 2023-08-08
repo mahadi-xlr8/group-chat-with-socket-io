@@ -2,12 +2,10 @@ require("express-async-errors");
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const helmet = require("helmet");
-const config = require("config");
 const { chats } = require("./server/db");
 const app = express();
 const route = require("./routes");
-const compression = require("compression");
+
 const error = require("./middleware/error");
 
 
@@ -37,7 +35,10 @@ require("./middleware/prodSecurity")(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: "*:*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
   },
 });
 io.on("connection", (socket) => {

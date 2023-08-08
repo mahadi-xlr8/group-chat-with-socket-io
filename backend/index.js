@@ -35,9 +35,8 @@ require("./middleware/prodSecurity")(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*:*",
+    origin: "*",
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
     credentials: true
   },
 });
@@ -64,6 +63,6 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`listening on port ${port}...`));
 
-httpServer.listen(8080, () => console.log("listing on port 8080..."));
+httpServer.listen(6969, () => console.log("listing on port 6969..."));
 
 // backend api

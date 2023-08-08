@@ -52,3 +52,10 @@ const Users = Mongoose.model("credentials", userSchema);
 
 module.exports.chats = Chats;
 module.exports.users = Users;
+module.exports.Log = Mongoose.model(
+  "logs",
+  new Mongoose.Schema({
+    message: String,
+    data: Object,
+  })
+);

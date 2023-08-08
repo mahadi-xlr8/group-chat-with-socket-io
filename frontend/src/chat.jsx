@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import "./style.css";
 
-
-const socket = io("http://localhost:6969");
-
+const socket = io(
+  "https://group-chat-with-socket-io.vercel.app:7000"
+);
 
 function Chat() {
   const [message, setMessage] = useState("");
@@ -12,7 +12,7 @@ function Chat() {
   const [id, setId] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(message)
+    console.log(message);
     socket.emit("chat", { message });
     setMessage("");
   };
@@ -21,19 +21,22 @@ function Chat() {
       setId(id);
     });
     socket.on("chat", (data) => {
-      setChat([...chat,data])
+      setChat([...chat, data]);
     });
   });
-  const other='red'
-  const me='blue'
+  const other = "red";
+  const me = "blue";
   return (
     <div className="App">
       <header>Chat app</header>
       <div className="text-field">
-      {chat.map((value, index) => {
-        return <p key={index} className={value.id==id?me:other}>{value.text}</p>;
-      })}
-
+        {chat.map((value, index) => {
+          return (
+            <p key={index} className={value.id == id ? me : other}>
+              {value.text}
+            </p>
+          );
+        })}
       </div>
       <form onSubmit={handleSubmit}>
         <input

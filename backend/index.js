@@ -5,15 +5,14 @@ const { Server } = require("socket.io");
 const { chats } = require("./server/db");
 const app = express();
 const route = require("./routes");
-
+const { Log } = require("./server/db");
 const error = require("./middleware/error");
 
-
 process.on("uncaughtException", (err) => {
-  console.error(err.message,err)
+  console.error(err.message, err);
 });
 process.on("unhandledRejection", (err) => {
-  console.error(err.message,err)
+  console.error(err.message, err);
 });
 
 require("./middleware/cors")(app);
@@ -37,7 +36,7 @@ const io = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
   },
 });
 io.on("connection", (socket) => {
@@ -63,6 +62,10 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`listening on port ${port}...`));
 
-httpServer.listen(6969, () => console.log("listing on port 6969..."));
+httpServer.listen(7000, async() => {
+  console.log("listing on port 7000...");
+  const log = new Log({ message: "port 7000 has created!"});
+  await log.save()
+});
 
 // backend api

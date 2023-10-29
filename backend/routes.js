@@ -17,6 +17,11 @@ const colors = [
   "rgb(232, 222, 252)",
   "rgb(170, 127, 255)",
 ];
+
+app.get("/", (req, res) => {
+  res.send("it is working!");
+});
+
 app.post("/signup", async (req, res) => {
   const validation = validateUser({
     username: req.body.username,

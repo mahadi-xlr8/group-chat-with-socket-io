@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import "./style.css";
 
-const socket = io(
-  "https://rust-wakeful-umbra.glitch.me:1988"
-);
+const socket = io();
 
 function Chat() {
   const [message, setMessage] = useState("");

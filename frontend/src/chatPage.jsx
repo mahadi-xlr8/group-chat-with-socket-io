@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "./style.css";
 import ChatComponent from "./components/chatComponent";
 import axios from "axios";
-const socket = io("https://rust-wakeful-umbra.glitch.me:1988");
+const socket = io();
 class Chat extends React.Component {
   state = {
     message: "",

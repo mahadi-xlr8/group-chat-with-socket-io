@@ -60,8 +60,7 @@ io.on("connection", (socket) => {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`listening on port ${port}...`));
 
-httpServer.listen(7000, async () => console.log("listing on port 7000..."));
+httpServer.listen(port, async () => console.log(`listing on port ${port}...`));
 
 // backend api

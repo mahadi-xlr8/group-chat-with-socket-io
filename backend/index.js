@@ -2,10 +2,10 @@ require("express-async-errors");
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const { chats } = require("./server/db");
+const { chats } = require("./db");
 const app = express();
 const route = require("./routes");
-const { Log } = require("./server/db");
+const { Log } = require("./db");
 const error = require("./middleware/error");
 
 process.on("uncaughtException", (err) => {
@@ -62,10 +62,6 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`listening on port ${port}...`));
 
-httpServer.listen(7000, async() => {
-  console.log("listing on port 7000...");
-  const log = new Log({ message: "port 7000 has created!"});
-  await log.save()
-});
+httpServer.listen(7000, async () => console.log("listing on port 7000..."));
 
 // backend api

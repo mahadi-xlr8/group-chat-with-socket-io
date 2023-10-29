@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "./style.css";
 
 const socket = io(
-  "https://group-chat-with-socket-io.vercel.app:7000"
+  "https://rust-wakeful-umbra.glitch.me:1988"
 );
 
 function Chat() {

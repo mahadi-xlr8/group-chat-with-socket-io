@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "./style.css";
 import ChatComponent from "./components/chatComponent";
 import axios from "axios";
-const socket = io("https://group-chat-with-socket-io.vercel.app:7000");
+const socket = io("https://rust-wakeful-umbra.glitch.me:1988");
 class Chat extends React.Component {
   state = {
     message: "",

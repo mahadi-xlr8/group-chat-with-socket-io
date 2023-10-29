@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { chats, users } = require("./server/db");
+const { chats, users } = require("./db");
 const validateUser = require("./validation/validate");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("./middleware/tokenCheck");

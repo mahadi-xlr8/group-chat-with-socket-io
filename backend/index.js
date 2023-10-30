@@ -5,7 +5,6 @@ const { Server } = require("socket.io");
 const { chats } = require("./db");
 const app = express();
 const route = require("./routes");
-const { Log } = require("./db");
 const error = require("./middleware/error");
 
 process.on("uncaughtException", (err) => {
@@ -15,7 +14,21 @@ process.on("unhandledRejection", (err) => {
   console.error(err.message, err);
 });
 
-require("./middleware/cors")(app);
+const cors = require('cors');
+
+const allowedOrigins = ['http://localhost:3000'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+}));
+
+// require("./middleware/cors")(app);
 
 if (!process.env.groupChat_jwtKey) {
   console.log("jwt key is not set!");
@@ -34,7 +47,7 @@ require("./middleware/prodSecurity")(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
   },

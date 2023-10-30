@@ -14,21 +14,21 @@ process.on("unhandledRejection", (err) => {
   console.error(err.message, err);
 });
 
-const cors = require('cors');
+// const cors = require('cors');
 
-const allowedOrigins = ['http://localhost:3000'];
+// const allowedOrigins = ['http://localhost:3000'];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-}));
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// }));
 
-// require("./middleware/cors")(app);
+require("./middleware/cors")(app);
 
 if (!process.env.groupChat_jwtKey) {
   console.log("jwt key is not set!");
@@ -47,7 +47,7 @@ require("./middleware/prodSecurity")(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["https://deploy-mern-1whq.vercel.app","http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   },
